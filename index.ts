@@ -1,11 +1,11 @@
-import * as observableTest from "./observableTest";
-import matrixTestCanvas from "./matrixTest/Canvas";
+// import * as observableTest from "./observable";
+// import matrixTestCanvas from "./matrixTest/Canvas";
 
-observableTest;
+// observableTest;
 
-const matrixTestCanvasElement = document.getElementById("matrixTest")!;
-console.log(matrixTestCanvasElement);
+// const matrixTestCanvasElement = document.getElementById("matrixTest")!;
+// console.log(matrixTestCanvasElement);
 
-const matrixTestCanvasObject = new matrixTestCanvas(
-  matrixTestCanvasElement as HTMLCanvasElement
-);
+// const matrixTestCanvasObject = new matrixTestCanvas(
+//   matrixTestCanvasElement as HTMLCanvasElement
+// );
