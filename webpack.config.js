@@ -14,7 +14,7 @@ const htmlPlugins = htmlPageNames.map((name) => {
   });
 });
 
-entry.main = path.join(__dirname, "main/index.ts");
+entry.main = path.join(__dirname, "index.ts");
 
 module.exports = {
   entry: entry,
