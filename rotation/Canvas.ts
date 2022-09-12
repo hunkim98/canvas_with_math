@@ -1,4 +1,5 @@
 import { Vector2d } from "../types/vector";
+import { TransformToCartesian2d } from "../utils/cartesian";
 import { rotateVector2d } from "../utils/tranform2d";
 
 export default class Canvas {
@@ -6,10 +7,10 @@ export default class Canvas {
   private context: CanvasRenderingContext2D;
   private width: number;
   private height: number;
-  private fps = 24;
+  private fps = 60;
   private vectors: Array<Vector2d>;
   private frameCount = 0;
-  private initialVector: Vector2d = [150, 0];
+  private initialVector: Vector2d = [70, 0];
 
   constructor(canvas: HTMLCanvasElement) {
     this.canvas = canvas;
@@ -27,31 +28,35 @@ export default class Canvas {
     this.updateFrame();
   }
 
-  updateFrame = () => {
-    this.drawAll();
+  updateFrame() {
+    this.clear();
+    this.drawWithCartesianOrigin(this.drawAll.bind(this));
     setTimeout(() => {
-      requestAnimationFrame(this.updateFrame);
+      requestAnimationFrame(this.updateFrame.bind(this));
     }, 1000 / this.fps);
     this.frameCount++;
-  };
+  }
 
   drawAll() {
-    this.clear();
-    this.drawVector();
-  }
-  drawVector() {
-    console.log(this.initialVector);
     const newVector = rotateVector2d(this.initialVector, Math.PI / 100);
     this.drawDot(...newVector);
     this.initialVector = newVector;
-    // this.vectors.map((vector) => {
-    //   this.context.fillStyle = "red";
-    // });
+  }
+
+  drawWithCartesianOrigin(renderFunction: Function) {
+    this.context.save();
+    this.context.transform(1, 1, 1, -1, this.width / 2, this.height / 2);
+    renderFunction();
+    this.context.restore();
+  }
+
+  drawVector(x: number, y: number) {
+    console.log(this.initialVector);
   }
 
   drawDot(x: number, y: number) {
     this.context.beginPath();
-    this.context.arc(x, y, 1, 0, 2 * Math.PI, true);
+    this.context.arc(x, y, 5, 0, 2 * Math.PI, true);
     this.context.fill();
     this.context.closePath();
     this.context.restore();

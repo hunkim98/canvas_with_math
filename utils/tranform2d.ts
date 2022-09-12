@@ -13,6 +13,13 @@ export function rotateVector2d(vector: Vector2d, radian: number) {
     [cos, sin],
     [-sin, cos],
   ];
-  console.log(multiplyMatrixWithVector(rotateMatrix, vector));
   return multiplyMatrixWithVector(rotateMatrix, vector) as Vector2d;
+}
+
+export function xAxisReflectVector2d(vector: Vector2d) {
+  const reflectMatrix: Matrix = [
+    [1, 0],
+    [0, -1],
+  ];
+  return multiplyMatrixWithVector(reflectMatrix, vector) as Vector2d;
 }
