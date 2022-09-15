@@ -15,3 +15,11 @@ export function scalarVector(vector: Array<number>, scalar: number) {
   }
   return result;
 }
+
+export function returnVectorSize(vector: Array<number>) {
+  let sum = 0;
+  for (const element of vector) {
+    sum += element * element;
+  }
+  return sum;
+}

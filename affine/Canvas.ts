@@ -8,7 +8,6 @@ export default class Canvas {
   private width: number;
   private height: number;
   private fps = 60;
-  private vectors: Array<Vector2d>;
   private frameCount = 0;
   private initialVector: Vector2d = [70, 0];
 
@@ -22,7 +21,6 @@ export default class Canvas {
     this.canvas.height = this.height;
     this.canvas.style.width = `${this.width}px`;
     this.canvas.style.height = `${this.height}px`;
-    this.vectors = [[5, 5]];
     console.log("canvas has been set!");
     //requesting animation
     this.updateFrame();
