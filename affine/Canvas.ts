@@ -66,11 +66,9 @@ export default class Canvas {
     this.origin = addVectors(this.origin, deltaTransformVector) as Vector2d;
     if (this.origin[0] > 80) {
       this.isDirectionChanged = true;
-      console.log("going left");
     }
     if (this.origin[0] < -80) {
       this.isDirectionChanged = false;
-      console.log("going right");
     }
 
     this.degree = this.isDirectionChanged
