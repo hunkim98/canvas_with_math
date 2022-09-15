@@ -5,13 +5,14 @@ import { returnVectorSize } from "./vectorFunctions";
 export const drawPoint = (
   ctx: CanvasRenderingContext2D,
   position: Vector2d,
-  color: string
+  color: { r: number; g: number; b: number; a: number }
 ) => {
   //we draw point only on integer points
   const screenPointVector = toScreenPointVector(position);
-  ctx.fillStyle = color;
+  ctx.fillStyle = `rgba(${color.r}, ${color.g}, ${color.b}, ${color.a})`;
+  //   ctx.fillStyle = "black";
+  //fillrect is quick at drawing on canvas
   ctx.fillRect(screenPointVector[0], screenPointVector[1], 1, 1);
-  ctx.restore();
 };
 
 export const createRectVectors = (width: number, height: number) => {

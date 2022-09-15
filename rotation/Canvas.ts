@@ -45,7 +45,7 @@ export default class Canvas {
 
   drawWithCartesianOrigin(renderFunction: Function) {
     this.context.save();
-    this.context.transform(1, 1, 1, -1, this.width / 2, this.height / 2);
+    this.context.transform(1, 0, 0, -1, this.width / 2, this.height / 2);
     renderFunction();
     this.context.restore();
   }
