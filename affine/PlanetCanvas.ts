@@ -16,6 +16,7 @@ import { addVectors, subtractVectors } from "../utils/vectorFunctions";
 import {
   createCircleVectors,
   createRectVectors,
+  drawCartesianPoint,
   drawPoint,
 } from "../utils/vectorShapes";
 
@@ -64,7 +65,7 @@ export default class Canvas {
     this.clear();
     // this.drawAll();
     this.drawBackground();
-    this.drawWithCartesianOrigin(this.drawAll.bind(this));
+    this.drawAll();
     setTimeout(() => {
       requestAnimationFrame(this.updateFrame.bind(this));
     }, 1000 / this.fps);
@@ -72,7 +73,12 @@ export default class Canvas {
 
   drawSun() {
     for (const vector of this.sunVectors) {
-      drawPoint(this.context, vector, { r: 255, g: 200, b: 0, a: 1 });
+      drawCartesianPoint(this.canvas, this.context, vector, {
+        r: 255,
+        g: 200,
+        b: 0,
+        a: 1,
+      });
     }
   }
 
@@ -116,7 +122,12 @@ export default class Canvas {
       return affineVectorToVector(transformedAffineVector) as Vector2d;
     });
     for (const vector of this.earthVectors) {
-      drawPoint(this.context, vector, { r: 0, g: 255, b: 0, a: 1 });
+      drawCartesianPoint(this.canvas, this.context, vector, {
+        r: 0,
+        g: 255,
+        b: 0,
+        a: 1,
+      });
     }
   }
 
@@ -143,7 +154,12 @@ export default class Canvas {
     });
 
     for (const vector of this.moonVectors) {
-      drawPoint(this.context, vector, { r: 255, g: 250, b: 205, a: 1 });
+      drawCartesianPoint(this.canvas, this.context, vector, {
+        r: 255,
+        g: 250,
+        b: 205,
+        a: 1,
+      });
     }
   }
 

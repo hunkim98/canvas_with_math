@@ -16,6 +16,7 @@ import { addVectors } from "../utils/vectorFunctions";
 import {
   createCircleVectors,
   createRectVectors,
+  drawCartesianPoint,
   drawPoint,
 } from "../utils/vectorShapes";
 
@@ -26,7 +27,7 @@ export default class Canvas {
   private height: number;
   private fps = 60;
   private origin: Vector2d = [0, 0];
-  private degree: number;
+  private degree: number = 0;
   private rectVectors: Vector2d[];
   private isDirectionChanged: boolean;
 
@@ -45,13 +46,12 @@ export default class Canvas {
     //requesting animation
     this.isDirectionChanged = false;
     this.updateFrame();
-    this.degree = 0;
   }
 
   updateFrame() {
     this.clear();
     // this.drawAll();
-    this.drawWithCartesianOrigin(this.drawAll.bind(this));
+    this.drawAll();
     setTimeout(() => {
       requestAnimationFrame(this.updateFrame.bind(this));
     }, 1000 / this.fps);
@@ -91,7 +91,12 @@ export default class Canvas {
       return affineVectorToVector(transformedAffineVector) as Vector2d;
     });
     for (const vector of this.rectVectors) {
-      drawPoint(this.context, vector, { r: 255, g: 0, b: 0, a: 1 });
+      drawCartesianPoint(this.canvas, this.context, vector, {
+        r: 255,
+        g: 0,
+        b: 0,
+        a: 255,
+      });
     }
   }
 
