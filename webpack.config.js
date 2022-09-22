@@ -1,6 +1,6 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const htmlPageNames = ["rotation", "observable", "affine"];
+const htmlPageNames = ["rotation", "observable", "affine", "mesh2D"];
 const entry = htmlPageNames.reduce((entries, componentName) => {
   entries[componentName] = path.join(__dirname, `./${componentName}/index.ts`);
   return entries;

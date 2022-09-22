@@ -73,7 +73,7 @@ export default class Canvas {
 
   drawSun() {
     for (const vector of this.sunVectors) {
-      drawCartesianPoint(this.canvas, this.context, vector, {
+      drawCartesianPoint(this.canvas, vector, {
         r: 255,
         g: 200,
         b: 0,
@@ -122,7 +122,7 @@ export default class Canvas {
       return affineVectorToVector(transformedAffineVector) as Vector2d;
     });
     for (const vector of this.earthVectors) {
-      drawCartesianPoint(this.canvas, this.context, vector, {
+      drawCartesianPoint(this.canvas, vector, {
         r: 0,
         g: 255,
         b: 0,
@@ -154,7 +154,7 @@ export default class Canvas {
     });
 
     for (const vector of this.moonVectors) {
-      drawCartesianPoint(this.canvas, this.context, vector, {
+      drawCartesianPoint(this.canvas, vector, {
         r: 255,
         g: 250,
         b: 205,

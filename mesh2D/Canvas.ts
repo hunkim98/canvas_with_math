@@ -17,7 +17,9 @@ import {
   createCircleVectors,
   createRectVectors,
   drawCartesianPoint,
+  drawCartesianLineByContext,
   drawPoint,
+  drawLine,
 } from "../utils/vectorShapes";
 
 export default class Canvas {
@@ -30,6 +32,9 @@ export default class Canvas {
   private degree: number = 0;
   private rectVectors: Vector2d[];
   private isDirectionChanged: boolean;
+  private vertexCount = 4;
+  private triangleCount = 2;
+  private squareHalfSize = 30;
 
   constructor(canvas: HTMLCanvasElement) {
     this.canvas = canvas;
@@ -57,47 +62,37 @@ export default class Canvas {
     }, 1000 / this.fps);
   }
 
+  drawMesh2D() {
+    const rawVertices: Vector2d[] = [
+      [-this.squareHalfSize, -this.squareHalfSize],
+      [-this.squareHalfSize, this.squareHalfSize],
+      [this.squareHalfSize, this.squareHalfSize],
+      [this.squareHalfSize, -this.squareHalfSize],
+    ];
+    const indices = [0, 1, 2, 0, 2, 3];
+    for (let ti = 0; ti < this.triangleCount; ti++) {
+      const bi = ti * 3;
+      drawLine(
+        this.canvas,
+        rawVertices[indices[bi]],
+        rawVertices[indices[bi + 1]]
+      );
+      drawLine(
+        this.canvas,
+        rawVertices[indices[bi]],
+        rawVertices[indices[bi + 2]]
+      );
+      drawLine(
+        this.canvas,
+        rawVertices[indices[bi + 1]],
+        rawVertices[indices[bi + 2]]
+      );
+    }
+  }
+
   drawAll() {
     // we move only x axis
-    const deltaTransformVector: Vector2d = this.isDirectionChanged
-      ? [-1, 0]
-      : [1, 0];
-    const tempRectVectors = createRectVectors(50, 50);
-    this.origin = addVectors(this.origin, deltaTransformVector) as Vector2d;
-    if (this.origin[0] > 80) {
-      this.isDirectionChanged = true;
-    }
-    if (this.origin[0] < -80) {
-      this.isDirectionChanged = false;
-    }
-
-    this.degree = this.isDirectionChanged
-      ? this.degree + Math.PI / 100
-      : this.degree - Math.PI / 100;
-    const rotateMatrix: Matrix = createRotateMatrix(this.degree);
-    const transformAffineMatrix = createAffineTranslateMatrix(this.origin);
-    const rotateAffineMatrix = createAffineRotateMatrix(rotateMatrix);
-    const combinedAffineTransformMatrix = multiplyMatrices(
-      transformAffineMatrix,
-      rotateAffineMatrix
-    );
-    //mutate original array
-    this.rectVectors = tempRectVectors.map((vector) => {
-      const affineVector = vectorToAffineVector(vector);
-      const transformedAffineVector = multiplyMatrixWithVector(
-        combinedAffineTransformMatrix,
-        affineVector
-      );
-      return affineVectorToVector(transformedAffineVector) as Vector2d;
-    });
-    for (const vector of this.rectVectors) {
-      drawCartesianPoint(this.canvas, vector, {
-        r: 255,
-        g: 0,
-        b: 0,
-        a: 255,
-      });
-    }
+    this.drawMesh2D();
   }
 
   drawWithCartesianOrigin(renderFunction: Function) {
