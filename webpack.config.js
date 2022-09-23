@@ -21,15 +21,6 @@ module.exports = (env) => ({
         use: "ts-loader",
         exclude: /node_modules/,
       },
-      {
-        test: /\.html$/,
-        use: [
-          {
-            loader: "html-loader",
-            options: { minimize: env.mode !== "development" },
-          },
-        ],
-      },
     ],
   },
   resolve: {
