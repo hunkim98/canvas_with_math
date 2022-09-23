@@ -30,7 +30,13 @@ module.exports = {
   resolve: {
     extensions: [".ts", ".js"],
   },
-  plugins: htmlPlugins,
+  plugins: htmlPlugins.concat(
+    new HtmlWebpackPlugin({
+      filename: `index.html`,
+      template: `index.html`,
+      chunks: [],
+    })
+  ),
   output: {
     filename: "[name].bundle.js",
     path: path.resolve(__dirname, "dist"),
