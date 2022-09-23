@@ -1,3 +1,8 @@
+/**
+ *
+ * @param vector number array
+ * @returns vector with integers
+ */
 export const toScreenPointVector = (vector: Array<number>) => {
   const screenPointVector: number[] = [];
   for (let i = 0; i < vector.length; i++) {

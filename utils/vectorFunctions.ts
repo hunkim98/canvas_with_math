@@ -7,6 +7,17 @@ export function addVectors(v1: Array<number>, v2: Array<number>) {
   return result;
 }
 
+export function dotVectors(v1: Array<number>, v2: Array<number>) {
+  if (v1.length !== v2.length) {
+    throw new Error("the vectors' length differ");
+  }
+  let result = 0;
+  v1.map((element, index) => {
+    result += element * v2[index];
+  });
+  return result;
+}
+
 export function subtractVectors(v1: Array<number>, v2: Array<number>) {
   const result: Array<number> = [];
   for (let i = 0; i < v1.length; i++) {

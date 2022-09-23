@@ -11,8 +11,9 @@ import {
   multiplyMatrices,
   multiplyMatrixWithVector,
 } from "../utils/matrixFunctions";
+import { toScreenPointVector } from "../utils/screen";
 import { rotateVector2d, createRotateMatrix } from "../utils/tranform2d";
-import { addVectors } from "../utils/vectorFunctions";
+import { addVectors, dotVectors } from "../utils/vectorFunctions";
 import {
   createCircleVectors,
   createRectVectors,
@@ -33,8 +34,16 @@ export default class Canvas {
   private rectVectors: Vector2d[];
   private isDirectionChanged: boolean;
   private vertexCount = 4;
+  private isColored: boolean = false;
+  private mode: "Mesh" | "Surface" = "Mesh";
   private triangleCount = 2;
   private squareHalfSize = 30;
+  private rawVertices: Vector2d[] = [
+    [-this.squareHalfSize - 100, -this.squareHalfSize],
+    [-this.squareHalfSize, this.squareHalfSize],
+    [this.squareHalfSize, this.squareHalfSize],
+    [this.squareHalfSize + 100, -this.squareHalfSize],
+  ];
 
   constructor(canvas: HTMLCanvasElement) {
     this.canvas = canvas;
@@ -53,6 +62,10 @@ export default class Canvas {
     this.updateFrame();
   }
 
+  toggleColorMode() {
+    this.isColored = !this.isColored;
+  }
+
   updateFrame() {
     this.clear();
     // this.drawAll();
@@ -62,37 +75,109 @@ export default class Canvas {
     }, 1000 / this.fps);
   }
 
+  drawColoredMesh2d() {
+    const indices = [0, 1, 2, 0, 2, 3];
+    for (let ti = 0; ti < this.triangleCount; ti++) {
+      const bi = ti * 3;
+      const tv: Vector2d[] = [
+        this.rawVertices[indices[bi]],
+        this.rawVertices[indices[bi + 1]],
+        this.rawVertices[indices[bi + 2]],
+      ];
+      const minPos: Vector2d = [
+        Math.min(tv[0][0], tv[1][0], tv[2][0]),
+        Math.min(tv[0][1], tv[1][1], tv[2][1]),
+      ];
+      const maxPos: Vector2d = [
+        Math.max(tv[0][0], tv[1][0], tv[2][0]),
+        Math.max(tv[0][1], tv[1][1], tv[2][1]),
+      ];
+
+      const u = addVectors(
+        tv[1],
+        tv[0].map((element) => -element)
+      );
+      const v = addVectors(
+        tv[2],
+        tv[0].map((element) => -element)
+      );
+      const udotv = dotVectors(u, v);
+      const vdotv = dotVectors(v, v);
+      const udotu = dotVectors(u, u);
+      const denominator = udotv * udotv - vdotv * udotu;
+      if (denominator === 0) {
+        continue;
+      }
+      const invDenominator = 1 / denominator;
+      const lowerLeftPoint = toScreenPointVector(minPos);
+      const upperRightPoint = toScreenPointVector(maxPos);
+      lowerLeftPoint[0] = Math.max(-this.canvas.width / 2, lowerLeftPoint[0]);
+      lowerLeftPoint[1] = Math.max(-this.canvas.height / 2, lowerLeftPoint[1]);
+      upperRightPoint[0] = Math.min(this.canvas.width / 2, upperRightPoint[0]);
+      upperRightPoint[1] = Math.min(this.canvas.height / 2, upperRightPoint[1]);
+
+      for (let x = lowerLeftPoint[0]; x <= upperRightPoint[0]; ++x) {
+        for (let y = lowerLeftPoint[1]; y <= upperRightPoint[1]; ++y) {
+          const pointToTest = [x, y];
+          const w = addVectors(
+            pointToTest,
+            tv[0].map((element) => -element)
+          );
+          const wdotu = dotVectors(w, u);
+          const wdotv = dotVectors(w, v);
+
+          const s = (wdotv * udotv - wdotu * vdotv) * invDenominator;
+          const t = (wdotu * udotv - wdotv * udotu) * invDenominator;
+          const oneMinusST = 1 - s - t;
+          if (
+            s >= 0 &&
+            s <= 1 &&
+            t >= 0 &&
+            t <= 1 &&
+            oneMinusST >= 0 &&
+            oneMinusST <= 1
+          ) {
+            drawCartesianPoint(this.canvas, [x, y], {
+              r: 255,
+              g: 0,
+              b: 0,
+              a: 255,
+            });
+          }
+        }
+      }
+    }
+  }
+
   drawMesh2D() {
-    const rawVertices: Vector2d[] = [
-      [-this.squareHalfSize, -this.squareHalfSize],
-      [-this.squareHalfSize, this.squareHalfSize],
-      [this.squareHalfSize, this.squareHalfSize],
-      [this.squareHalfSize, -this.squareHalfSize],
-    ];
     const indices = [0, 1, 2, 0, 2, 3];
     for (let ti = 0; ti < this.triangleCount; ti++) {
       const bi = ti * 3;
       drawLine(
         this.canvas,
-        rawVertices[indices[bi]],
-        rawVertices[indices[bi + 1]]
+        this.rawVertices[indices[bi]],
+        this.rawVertices[indices[bi + 1]]
       );
       drawLine(
         this.canvas,
-        rawVertices[indices[bi]],
-        rawVertices[indices[bi + 2]]
+        this.rawVertices[indices[bi]],
+        this.rawVertices[indices[bi + 2]]
       );
       drawLine(
         this.canvas,
-        rawVertices[indices[bi + 1]],
-        rawVertices[indices[bi + 2]]
+        this.rawVertices[indices[bi + 1]],
+        this.rawVertices[indices[bi + 2]]
       );
     }
   }
 
   drawAll() {
     // we move only x axis
-    this.drawMesh2D();
+    if (this.isColored) {
+      this.drawColoredMesh2d();
+    } else {
+      this.drawMesh2D();
+    }
   }
 
   drawWithCartesianOrigin(renderFunction: Function) {

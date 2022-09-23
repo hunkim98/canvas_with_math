@@ -1,4 +1,5 @@
 import { Vector2d } from "../types/vector";
+import { CohenSutherlandLineClip } from "./lineClipping";
 import { toScreenPointVector } from "./screen";
 
 import { addVectors, returnVectorSize } from "./vectorFunctions";
@@ -10,9 +11,14 @@ export const drawLine = (
 ) => {
   let clippedStart = InStartPos;
   let clippedEnd = InEndPos;
-  const minScreen = [-canvas.width / 2, -canvas.height / 2];
-  const maxScreen = [canvas.width / 2, canvas.height / 2];
+  const minScreen: Vector2d = [-canvas.width / 2, -canvas.height / 2];
+  const maxScreen: Vector2d = [canvas.width / 2, canvas.height / 2];
   //line clipping algorithm
+  if (
+    !CohenSutherlandLineClip(clippedStart, clippedEnd, minScreen, maxScreen)
+  ) {
+    return;
+  }
   //
   const startPoint = toScreenPointVector(clippedStart);
   const endPoint = toScreenPointVector(clippedEnd);
