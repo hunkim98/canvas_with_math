@@ -37,9 +37,4 @@ module.exports = {
       chunks: [],
     })
   ),
-  output: {
-    filename: "[name].bundle.js",
-    path: path.resolve(__dirname, "dist"),
-    publicPath: argv.mode === "production" ? "/canvas_with_math/" : "/",
-  },
 };
