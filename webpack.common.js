@@ -18,7 +18,6 @@ entry.main = path.join(__dirname, "index.ts");
 
 module.exports = {
   entry: entry,
-  devtool: "inline-source-map",
   module: {
     rules: [
       {
