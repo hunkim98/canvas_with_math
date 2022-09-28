@@ -7,13 +7,11 @@ import { mat4 } from "gl-matrix";
 export default class Canvas {
   private canvas: HTMLCanvasElement;
   private context: WebGLRenderingContext;
-  private width: number;
-  private height: number;
+  //   private width: number;
+  //   private height: number;
   private fps = 60;
   private frameCount = 0;
-  private initialVector: Vector2d = [70, 0];
   private shaderProgram: WebGLProgram;
-  private buffers: { position: WebGLBuffer | null };
   private programInfo: {
     program: WebGLProgram;
     attribLocations: {
@@ -43,13 +41,13 @@ export default class Canvas {
     this.canvas = canvas;
     this.context = canvas.getContext("webgl")!;
     this.canvas.style.border = "1px solid black";
-    this.width = 300;
-    this.height = 300;
-    this.canvas.width = this.width;
-    this.canvas.height = this.height;
-    this.canvas.style.width = `${this.width}px`;
-    this.canvas.style.height = `${this.height}px`;
-    this.buffers = this.initBuffers();
+    // this.width = 300;
+    // this.height = 300;
+    // this.canvas.width = this.width;
+    // this.canvas.height = this.height;
+    // this.canvas.style.width = `${this.width}px`;
+    // this.canvas.style.height = `${this.height}px`;
+
     this.shaderProgram = initShaderProgram(
       this.context,
       this.vsSource,
@@ -74,6 +72,7 @@ export default class Canvas {
         )!,
       },
     };
+    this.initBuffers();
     console.log("canvas has been set!");
     //requesting animation
     this.updateFrame();
@@ -157,7 +156,6 @@ export default class Canvas {
       const stride = 0; // how many bytes to get from one set of values to the next
       // 0 = use type and numComponents above
       const offset = 0; // how many bytes inside the buffer to start from
-      this.context.bindBuffer(this.context.ARRAY_BUFFER, this.buffers.position);
       this.context.vertexAttribPointer(
         this.programInfo.attribLocations.vertexPosition,
         numComponents,
