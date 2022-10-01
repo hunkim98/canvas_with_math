@@ -5,8 +5,8 @@ This is a typescript repository where I study linear algebra by applying to html
 To test it out,
 
 clone the repository and run
+
 ```
-$ yarn 
+$ yarn
 $ yarn start
 ```
-

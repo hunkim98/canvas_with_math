@@ -2,10 +2,9 @@ name: CI
 
 on:
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
-
   build:
     name: build
     runs-on: ubuntu-latest
@@ -16,9 +15,9 @@ jobs:
       - name: Setup Node 🔧
         uses: actions/setup-node@v2
         with:
-          node-version: '16'
+          node-version: "16"
 
-      - name: Install and Build 🔧 
+      - name: Install and Build 🔧
         run: |
           yarn
           yarn build
