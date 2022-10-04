@@ -1,5 +1,6 @@
 //https://evanw.github.io/lightgl.js/docs/vector.html
 
+import { Vector2 } from "./Vector2";
 import { Vector4 } from "./Vector4";
 
 export class Vector3 {
@@ -40,5 +41,11 @@ export class Vector3 {
   }
   toArray(): Array<number> {
     return [this.x, this.y, this.z];
+  }
+  toVector2() {
+    return new Vector2(this.x, this.y);
+  }
+  normalize() {
+    return this.scalarBy(1 / this.length());
   }
 }

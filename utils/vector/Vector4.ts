@@ -1,3 +1,6 @@
+import { Vector2 } from "./Vector2";
+import { Vector3 } from "./Vector3";
+
 //this is also an affine vector for vector3
 export class Vector4 {
   x: number;
@@ -36,5 +39,15 @@ export class Vector4 {
   }
   toArray(): Array<number> {
     return [this.x, this.y, this.z, this.w];
+  }
+  toVector2() {
+    return new Vector2(this.x, this.y);
+  }
+
+  toVector3() {
+    return new Vector3(this.x, this.y, this.z);
+  }
+  normalize() {
+    return this.scalarBy(1 / this.length());
   }
 }
