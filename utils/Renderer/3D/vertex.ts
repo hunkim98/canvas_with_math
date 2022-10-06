@@ -6,7 +6,11 @@ export class Vertex3D {
   position: Vector4;
   color: LinearColor;
   UV: Vector2;
-  constructor(inPosition: Vector4, color: LinearColor, UV: Vector2) {
+  constructor(
+    inPosition: Vector4,
+    color: LinearColor = LinearColor.Black,
+    UV: Vector2 = new Vector2(1, 1)
+  ) {
     this.position = inPosition;
     this.color = color;
     this.UV = UV;
