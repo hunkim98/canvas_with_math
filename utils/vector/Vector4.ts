@@ -7,6 +7,12 @@ export class Vector4 {
   y: number;
   z: number;
   w: number;
+
+  static UnitX = new Vector4(1, 0, 0, 0);
+  static UnitY = new Vector4(0, 1, 0, 0);
+  static UnitZ = new Vector4(0, 0, 1, 0);
+  static UnitW = new Vector4(0, 0, 0, 1);
+
   constructor(x: number, y: number, z: number, w: number) {
     this.x = x || 0;
     this.y = y || 0;

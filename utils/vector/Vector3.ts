@@ -7,6 +7,9 @@ export class Vector3 {
   x: number;
   y: number;
   z: number;
+  static UnitX = new Vector3(1, 0, 0);
+  static UnitY = new Vector3(0, 1, 0);
+  static UnitZ = new Vector3(0, 0, 1);
   constructor(x: number, y: number, z: number) {
     this.x = x || 0;
     this.y = y || 0;
