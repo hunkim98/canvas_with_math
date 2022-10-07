@@ -6,6 +6,8 @@ export class Vector2 {
   x: number;
   y: number;
 
+  static One = new Vector2(1, 1);
+  static Zero = new Vector2(0, 0);
   static UnitX = new Vector2(1, 0);
   static UnitY = new Vector2(0, 1);
   constructor(x: number, y: number) {

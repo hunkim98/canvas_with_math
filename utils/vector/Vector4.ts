@@ -8,6 +8,8 @@ export class Vector4 {
   z: number;
   w: number;
 
+  static One = new Vector4(1, 1, 1, 1);
+  static Zero = new Vector4(0, 0, 0, 0);
   static UnitX = new Vector4(1, 0, 0, 0);
   static UnitY = new Vector4(0, 1, 0, 0);
   static UnitZ = new Vector4(0, 0, 1, 0);

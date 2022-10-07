@@ -6,6 +6,7 @@ import { mat4 } from "gl-matrix";
 import { Vector3 } from "../utils/vector/Vector3";
 import { drawLine } from "../utils/Renderer/Canvas";
 import { Vertex3D } from "../utils/Renderer/3D/vertex";
+import { Rotator } from "../utils/euler";
 
 export default class Canvas {
   private canvas: HTMLCanvasElement;
@@ -16,6 +17,8 @@ export default class Canvas {
   private frameCount = 0;
   private vertexBuffer: Array<Vector3> = [];
   private indexBuffer: Array<number> = [];
+  private cubeRotator: Rotator;
+  private cameraRotator: Rotator;
 
   private cubeRotation: number = 0;
   private then: number = 0;
@@ -32,6 +35,8 @@ export default class Canvas {
     this.canvas.height = this.height;
     this.canvas.style.width = `${this.width}px`;
     this.canvas.style.height = `${this.height}px`;
+    this.cubeRotator = new Rotator();
+    this.cameraRotator = new Rotator();
     console.log("canvas has been set!");
     //requesting animation
     this.initCube(100);

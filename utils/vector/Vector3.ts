@@ -7,6 +7,9 @@ export class Vector3 {
   x: number;
   y: number;
   z: number;
+
+  static One = new Vector3(1, 1, 1);
+  static Zero = new Vector3(0, 0, 0);
   static UnitX = new Vector3(1, 0, 0);
   static UnitY = new Vector3(0, 1, 0);
   static UnitZ = new Vector3(0, 0, 1);
