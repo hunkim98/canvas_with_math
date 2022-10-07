@@ -1,12 +1,9 @@
-import { Vector2d } from "../types/vector";
-import { TransformToCartesian2d } from "../utils/cartesian";
-import { rotateVector2d } from "../utils/tranform2d";
-import { initShaderProgram } from "../utils/Webgl/shaders";
-import { mat4 } from "gl-matrix";
 import { Vector3 } from "../utils/vector/Vector3";
 import { drawLine } from "../utils/Renderer/Canvas";
 import { Vertex3D } from "../utils/Renderer/3D/vertex";
-import { Rotator } from "../utils/euler";
+import { Rotator } from "../utils/Renderer/Math/Rotator";
+import { CameraObject } from "../utils/Renderer/3D/CameraObject";
+import { TransformComponent } from "../utils/Renderer/3D/TransformComponent";
 
 export default class Canvas {
   private canvas: HTMLCanvasElement;
@@ -17,10 +14,8 @@ export default class Canvas {
   private frameCount = 0;
   private vertexBuffer: Array<Vector3> = [];
   private indexBuffer: Array<number> = [];
-  private cubeRotator: Rotator;
-  private cameraRotator: Rotator;
-
-  private cubeRotation: number = 0;
+  private camera: CameraObject;
+  private cubeTransform: TransformComponent;
   private then: number = 0;
 
   //we use an interpolator - it automatically makes a gradient between colors
@@ -35,20 +30,30 @@ export default class Canvas {
     this.canvas.height = this.height;
     this.canvas.style.width = `${this.width}px`;
     this.canvas.style.height = `${this.height}px`;
-    this.cubeRotator = new Rotator();
-    this.cameraRotator = new Rotator();
+    this.camera = new CameraObject();
+    this.cubeTransform = new TransformComponent();
     console.log("canvas has been set!");
+    this.cubeTransform.rotation.Yaw = 1;
+    this.cubeTransform.rotation.Pitch = 1;
     //requesting animation
-    this.initCube(100);
+    this.initCube(50);
     requestAnimationFrame(this.render);
   }
 
-  render = (now: DOMHighResTimeStamp) => {
-    now *= 0.001; // convert to seconds
-    const deltaTime = now - this.then;
-    this.then = now;
-    this.drawScene(deltaTime);
-    requestAnimationFrame(this.render);
+  // render = (now: DOMHighResTimeStamp) => {
+  //   now *= 0.001; // convert to seconds
+  //   const deltaTime = now - this.then;
+  //   this.then = now;
+  //   this.drawScene(deltaTime);
+  //   requestAnimationFrame(this.render);
+  // };
+
+  render = () => {
+    this.clear();
+    this.drawScene();
+    setTimeout(() => {
+      requestAnimationFrame(this.render.bind(this));
+    }, 1000 / this.fps);
   };
 
   initCube(sideLength: number) {
@@ -131,6 +136,23 @@ export default class Canvas {
     this.indexBuffer = indexBuffer;
   }
 
+  drawCube() {
+    const updatedVertexBuffer = [];
+    // console.log(this.cubeTransform.rotation.Yaw);
+    //update the modelin matrix
+    this.cubeTransform.update();
+    for (let i = 0; i < this.vertexBuffer.length; i++) {
+      const newVertex = this.cubeTransform
+        .getModelingMatrix()
+        .multiplyVector(this.vertexBuffer[i].toAffine(true));
+      updatedVertexBuffer.push(
+        new Vector3(newVertex.x, newVertex.y, newVertex.z)
+      );
+    }
+    this.vertexBuffer = updatedVertexBuffer;
+    this.drawMeshLines();
+  }
+
   drawMeshLines() {
     for (let ti = 0; ti < this.indexBuffer.length / 3; ++ti) {
       const bi = ti * 3;
@@ -151,8 +173,6 @@ export default class Canvas {
       );
     }
   }
-
-  drawTriangle() {}
 
   initBuffers() {
     // we disable prettier for the bottom variable for ease
@@ -175,8 +195,8 @@ export default class Canvas {
       colors = colors.concat(c, c, c, c);
     }
   }
-  drawScene(deltaTime: number) {
-    this.drawMeshLines();
+  drawScene() {
+    this.drawCube();
   }
   clear() {
     this.context.clearRect(0, 0, this.width, this.height);

@@ -44,7 +44,7 @@ export class Rotator {
     const Rpitch = new Matrix3x3(
       Vector3.UnitX,
       new Vector3(0, Math.cos(Pitch), Math.sin(Pitch)),
-      new Vector3(0, -Math.sin(Pitch), Math.sin(Pitch))
+      new Vector3(0, -Math.sin(Pitch), Math.cos(Pitch))
     );
     //y-axis rotation - yaw rotate
     const Ryaw = new Matrix3x3(

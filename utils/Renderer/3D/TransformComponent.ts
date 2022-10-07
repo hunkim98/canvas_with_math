@@ -16,6 +16,13 @@ export class TransformComponent {
     this.rotation.Yaw += InDegree;
   }
 
+  addPitchRotation(InDegree: number) {
+    this.rotation.Pitch += InDegree;
+  }
+  addRollRotation(InDegree: number) {
+    this.rotation.Roll += InDegree;
+  }
+
   update() {
     this.rotation.clamp();
     const { OutRight, OutUp, OutForward } = this.rotation.getLocalAxes();
