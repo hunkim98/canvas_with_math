@@ -79,14 +79,14 @@ export default class Canvas {
     const rotateAffineMatrix = createAffineRotateMatrix(rotateMatrix);
     const combinedAffineTransformMatrix = multiplyMatrices(
       transformAffineMatrix,
-      rotateAffineMatrix
+      rotateAffineMatrix,
     );
     //mutate original array
-    this.rectVectors = tempRectVectors.map((vector) => {
+    this.rectVectors = tempRectVectors.map(vector => {
       const affineVector = vectorToAffineVector(vector);
       const transformedAffineVector = multiplyMatrixWithVector(
         combinedAffineTransformMatrix,
-        affineVector
+        affineVector,
       );
       return affineVectorToVector(transformedAffineVector) as Vector2d;
     });

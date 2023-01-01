@@ -5,7 +5,7 @@ export const TransformToCartesian2d = () => {
   function inner(
     target: any,
     propertyKey: string,
-    descriptor: TypedPropertyDescriptor<(x: number, y: number) => void>
+    descriptor: TypedPropertyDescriptor<(x: number, y: number) => void>,
   ) {
     const method = descriptor.value!;
     descriptor.value = function (...args: Vector2d) {

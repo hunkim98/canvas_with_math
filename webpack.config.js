@@ -15,7 +15,7 @@ const entry = htmlPageNames.reduce((entries, componentName) => {
 
 entry.main = path.join(__dirname, "index.ts");
 
-module.exports = (env) => ({
+module.exports = env => ({
   mode: env.mode,
   devServer: {
     contentBase: "./dist",
@@ -35,7 +35,7 @@ module.exports = (env) => ({
   },
   devtool: env.mode === "development" ? "inline-source-map" : undefined,
   plugins: htmlPageNames
-    .map((name) => {
+    .map(name => {
       return new HtmlWebpackPlugin({
         filename: `${name}.html`,
         template: `./${name}/index.html`,
@@ -55,7 +55,7 @@ module.exports = (env) => ({
         base: env.mode === "production" && {
           href: "https://hunkim98.github.io/canvas_with_math/",
         },
-      })
+      }),
     ),
   output: {
     filename: "[name].bundle.js",

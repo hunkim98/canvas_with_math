@@ -5,14 +5,14 @@ export class Matrix2x2 {
 
   constructor(
     InCol0: Vector2 = Vector2.UnitX,
-    InCol1: Vector2 = Vector2.UnitY
+    InCol1: Vector2 = Vector2.UnitY,
   ) {
     this.Cols = [InCol0, InCol1];
   }
   transpose() {
     return new Matrix2x2(
       new Vector2(this.Cols[0].x, this.Cols[1].x),
-      new Vector2(this.Cols[0].y, this.Cols[1].y)
+      new Vector2(this.Cols[0].y, this.Cols[1].y),
     );
   }
 
@@ -43,12 +43,12 @@ export class Matrix2x2 {
     return new Matrix2x2(
       new Vector2(
         transposedMatrix.Cols[0].dot(m.Cols[0]),
-        transposedMatrix.Cols[1].dot(m.Cols[0])
+        transposedMatrix.Cols[1].dot(m.Cols[0]),
       ),
       new Vector2(
         transposedMatrix.Cols[0].dot(m.Cols[1]),
-        transposedMatrix.Cols[1].dot(m.Cols[1])
-      )
+        transposedMatrix.Cols[1].dot(m.Cols[1]),
+      ),
     );
   }
 
@@ -56,7 +56,7 @@ export class Matrix2x2 {
     const transposedMatrix = this.transpose();
     return new Vector2(
       transposedMatrix.Cols[0].dot(v),
-      transposedMatrix.Cols[1].dot(v)
+      transposedMatrix.Cols[1].dot(v),
     );
   }
 }

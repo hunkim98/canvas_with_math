@@ -44,19 +44,19 @@ export class Rotator {
     const Rpitch = new Matrix3x3(
       Vector3.UnitX,
       new Vector3(0, Math.cos(Pitch), Math.sin(Pitch)),
-      new Vector3(0, -Math.sin(Pitch), Math.cos(Pitch))
+      new Vector3(0, -Math.sin(Pitch), Math.cos(Pitch)),
     );
     //y-axis rotation - yaw rotate
     const Ryaw = new Matrix3x3(
       new Vector3(Math.cos(Yaw), 0, -Math.sin(Yaw)),
       Vector3.UnitY,
-      new Vector3(Math.sin(Yaw), 0, Math.cos(Yaw))
+      new Vector3(Math.sin(Yaw), 0, Math.cos(Yaw)),
     );
     //z-axis rotation - roll rotate
     const Rroll = new Matrix3x3(
       new Vector3(Math.cos(Roll), Math.sin(Roll), 0),
       new Vector3(-Math.sin(Roll), Math.cos(Roll), 0),
-      Vector3.UnitZ
+      Vector3.UnitZ,
     );
     const RotateMatrix = Ryaw.multiplyMatrix(Rpitch).multiplyMatrix(Rroll);
     return {

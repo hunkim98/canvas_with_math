@@ -7,7 +7,7 @@ export const drawLine = (
   canvas: HTMLCanvasElement,
   InStartPos: Vector2 | Vector4,
   InEndPos: Vector2 | Vector4,
-  InColor: LinearColor = LinearColor.Black
+  InColor: LinearColor = LinearColor.Black,
 ) => {
   let clippedStart =
     InStartPos instanceof Vector2 ? InStartPos : InStartPos.toVector2();
@@ -43,7 +43,7 @@ export const drawLine = (
       drawCartesianPoint(
         canvas,
         new Vector2(x, y).toScreenPointVector(),
-        InColor
+        InColor,
       );
       if (f < 0) {
         f += f1;
@@ -58,7 +58,7 @@ export const drawLine = (
       drawCartesianPoint(
         canvas,
         new Vector2(x, y).toScreenPointVector(),
-        InColor
+        InColor,
       );
       if (f < 0) {
         f += f1;
@@ -74,14 +74,14 @@ export const drawLine = (
 export const drawCartesianPoint = (
   canvas: HTMLCanvasElement,
   position: Vector2,
-  inColor: LinearColor = LinearColor.Black
+  inColor: LinearColor = LinearColor.Black,
 ) => {
   //we draw point only on integer points
   position.y = -position.y; // invert the y axis
   const ctx = canvas.getContext("2d")!;
   const screenPointVector = position.toScreenPointVector();
   const cartesianTransformedPoint = screenPointVector.add(
-    new Vector2(Math.floor(canvas.width / 2), Math.floor(canvas.height / 2))
+    new Vector2(Math.floor(canvas.width / 2), Math.floor(canvas.height / 2)),
   );
   const color = inColor.toColor32();
   ctx.fillStyle = `rgba(${color.R}, ${color.G}, ${color.B}, ${color.A})`;

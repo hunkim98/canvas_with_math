@@ -7,7 +7,7 @@ export function drawMesh3D() {}
 export function drawTriangle3d(
   canvas: HTMLCanvasElement,
   inVertices: Array<Vertex3D>,
-  color: string
+  color: string,
 ) {
   drawLine(canvas, inVertices[0].position, inVertices[1].position);
   drawLine(canvas, inVertices[0].position, inVertices[2].position);

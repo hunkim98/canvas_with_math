@@ -116,11 +116,11 @@ export default class Canvas {
     //we need to know how many indexes there will be beforehand
     //indices tell us how the lines of the triangles will be drawn
     const frontIndices = [0, 1, 2, 0, 2, 3];
-    const backIndices = frontIndices.map((element) => element + 4);
-    const topIndices = backIndices.map((element) => element + 4);
-    const bottomIndices = topIndices.map((element) => element + 4);
-    const rightIndices = bottomIndices.map((element) => element + 4);
-    const leftIndices = rightIndices.map((element) => element + 4);
+    const backIndices = frontIndices.map(element => element + 4);
+    const topIndices = backIndices.map(element => element + 4);
+    const bottomIndices = topIndices.map(element => element + 4);
+    const rightIndices = bottomIndices.map(element => element + 4);
+    const leftIndices = rightIndices.map(element => element + 4);
 
     //인덱스 정보는 삼각형의 수만큼 필요하기 때문에 버퍼의 크기(vector 개수)는 항상 3의 배수이다
     //우리가 Mesh class를 만들때는 vertices, indices 정보를 무조건 수동으로 기입해야 한다
@@ -141,12 +141,15 @@ export default class Canvas {
     // console.log(this.cubeTransform.rotation.Yaw);
     //update the modelin matrix
     this.cubeTransform.update();
+    const finalMatrix = this.camera
+      .getViewMatrix()
+      .multiplyMatrix(this.cubeTransform.getModelingMatrix());
     for (let i = 0; i < this.vertexBuffer.length; i++) {
-      const newVertex = this.cubeTransform
-        .getModelingMatrix()
-        .multiplyVector(this.vertexBuffer[i].toAffine(true));
+      const newVertex = finalMatrix.multiplyVector(
+        this.vertexBuffer[i].toAffine(true),
+      );
       updatedVertexBuffer.push(
-        new Vector3(newVertex.x, newVertex.y, newVertex.z)
+        new Vector3(newVertex.x, newVertex.y, newVertex.z),
       );
     }
     this.vertexBuffer = updatedVertexBuffer;
@@ -159,17 +162,17 @@ export default class Canvas {
       drawLine(
         this.canvas,
         this.vertexBuffer[this.indexBuffer[bi]].toAffine(true),
-        this.vertexBuffer[this.indexBuffer[bi + 1]].toAffine(true)
+        this.vertexBuffer[this.indexBuffer[bi + 1]].toAffine(true),
       );
       drawLine(
         this.canvas,
         this.vertexBuffer[this.indexBuffer[bi]].toAffine(true),
-        this.vertexBuffer[this.indexBuffer[bi + 2]].toAffine(true)
+        this.vertexBuffer[this.indexBuffer[bi + 2]].toAffine(true),
       );
       drawLine(
         this.canvas,
         this.vertexBuffer[this.indexBuffer[bi + 1]].toAffine(true),
-        this.vertexBuffer[this.indexBuffer[bi + 2]].toAffine(true)
+        this.vertexBuffer[this.indexBuffer[bi + 2]].toAffine(true),
       );
     }
   }

@@ -15,7 +15,7 @@ export class Matrix4x4 {
     InCol0: Vector4 = Vector4.UnitX,
     InCol1: Vector4 = Vector4.UnitY,
     InCol2: Vector4 = Vector4.UnitZ,
-    InCol3: Vector4 = Vector4.UnitW
+    InCol3: Vector4 = Vector4.UnitW,
   ) {
     this.Cols = [InCol0, InCol1, InCol2, InCol3];
   }
@@ -26,26 +26,26 @@ export class Matrix4x4 {
         this.Cols[0].x,
         this.Cols[1].x,
         this.Cols[2].x,
-        this.Cols[3].x
+        this.Cols[3].x,
       ),
       new Vector4(
         this.Cols[0].y,
         this.Cols[1].y,
         this.Cols[2].y,
-        this.Cols[3].y
+        this.Cols[3].y,
       ),
       new Vector4(
         this.Cols[0].z,
         this.Cols[1].z,
         this.Cols[2].z,
-        this.Cols[3].z
+        this.Cols[3].z,
       ),
       new Vector4(
         this.Cols[0].w,
         this.Cols[1].w,
         this.Cols[2].w,
-        this.Cols[3].w
-      )
+        this.Cols[3].w,
+      ),
     );
   }
 
@@ -69,7 +69,7 @@ export class Matrix4x4 {
       this.Cols[0].scalarBy(x),
       this.Cols[1].scalarBy(x),
       this.Cols[2].scalarBy(x),
-      this.Cols[3].scalarBy(x)
+      this.Cols[3].scalarBy(x),
     );
   }
   negative() {
@@ -87,26 +87,26 @@ export class Matrix4x4 {
         transposedMatrix.Cols[0].dot(m.Cols[0]),
         transposedMatrix.Cols[1].dot(m.Cols[0]),
         transposedMatrix.Cols[2].dot(m.Cols[0]),
-        transposedMatrix.Cols[3].dot(m.Cols[0])
+        transposedMatrix.Cols[3].dot(m.Cols[0]),
       ),
       new Vector4(
         transposedMatrix.Cols[0].dot(m.Cols[1]),
         transposedMatrix.Cols[1].dot(m.Cols[1]),
         transposedMatrix.Cols[2].dot(m.Cols[1]),
-        transposedMatrix.Cols[3].dot(m.Cols[1])
+        transposedMatrix.Cols[3].dot(m.Cols[1]),
       ),
       new Vector4(
         transposedMatrix.Cols[0].dot(m.Cols[2]),
         transposedMatrix.Cols[1].dot(m.Cols[2]),
         transposedMatrix.Cols[2].dot(m.Cols[2]),
-        transposedMatrix.Cols[3].dot(m.Cols[2])
+        transposedMatrix.Cols[3].dot(m.Cols[2]),
       ),
       new Vector4(
         transposedMatrix.Cols[0].dot(m.Cols[3]),
         transposedMatrix.Cols[1].dot(m.Cols[3]),
         transposedMatrix.Cols[2].dot(m.Cols[3]),
-        transposedMatrix.Cols[3].dot(m.Cols[3])
-      )
+        transposedMatrix.Cols[3].dot(m.Cols[3]),
+      ),
     );
   }
 
@@ -116,7 +116,7 @@ export class Matrix4x4 {
       transposedMatrix.Cols[0].dot(v),
       transposedMatrix.Cols[1].dot(v),
       transposedMatrix.Cols[2].dot(v),
-      transposedMatrix.Cols[3].dot(v)
+      transposedMatrix.Cols[3].dot(v),
     );
   }
 
@@ -124,7 +124,7 @@ export class Matrix4x4 {
     return new Matrix3x3(
       this.Cols[0].toVector3(),
       this.Cols[1].toVector3(),
-      this.Cols[2].toVector3()
+      this.Cols[2].toVector3(),
     );
   }
 }

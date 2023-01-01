@@ -14,7 +14,7 @@ export class LinearColor {
     inR: number = 0.0,
     inG: number = 0.0,
     inB: number = 0.0,
-    inA: number = 1.0
+    inA: number = 1.0,
   ) {
     this.R = inR;
     this.G = inG;
@@ -27,7 +27,7 @@ export class LinearColor {
       this.R + inColor.R,
       this.G + inColor.G,
       this.B + inColor.B,
-      this.A + inColor.A
+      this.A + inColor.A,
     );
   }
 
@@ -36,7 +36,7 @@ export class LinearColor {
       this.R * inScalar,
       this.G * inScalar,
       this.B * inScalar,
-      this.A * inScalar
+      this.A * inScalar,
     );
   }
 

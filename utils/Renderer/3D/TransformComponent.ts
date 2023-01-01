@@ -46,7 +46,7 @@ export class TransformComponent {
       this.right.scalarBy(this.scale.x).toAffine(false),
       this.up.scalarBy(this.scale.y).toAffine(false),
       this.forward.scalarBy(this.scale.z).toAffine(false),
-      this.position.toAffine(true)
+      this.position.toAffine(true),
     );
   }
 

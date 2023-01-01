@@ -4,7 +4,7 @@ import { Vector2d } from "../types/vector";
 export const testRegion = (
   inVectorPos: Vector2d,
   inMinPos: Vector2d,
-  inMaxPos: Vector2d
+  inMaxPos: Vector2d,
 ) => {
   let result = 0;
   if (inVectorPos[0] < inMinPos[0]) {
@@ -26,7 +26,7 @@ export const CohenSutherlandLineClip = (
   inOutStartPos: Vector2d,
   inOutEndPos: Vector2d,
   inMinPos: Vector2d,
-  inMaxPos: Vector2d
+  inMaxPos: Vector2d,
 ) => {
   let startTest = testRegion(inOutStartPos, inMinPos, inMaxPos);
   let endTest = testRegion(inOutEndPos, inMinPos, inMaxPos);
@@ -87,7 +87,7 @@ const SMALL_NUMBER = 0.00000001;
 export const equalsInTolerance = (
   number1: number,
   number2: number,
-  intolerance: number = SMALL_NUMBER
+  intolerance: number = SMALL_NUMBER,
 ) => {
   return Math.abs(number2 - number1) <= intolerance;
 };

@@ -7,7 +7,7 @@ export class Matrix3x3 {
   constructor(
     InCol0: Vector3 = Vector3.UnitX,
     InCol1: Vector3 = Vector3.UnitY,
-    InCol2: Vector3 = Vector3.UnitZ
+    InCol2: Vector3 = Vector3.UnitZ,
   ) {
     this.Cols = [InCol0, InCol1, InCol2];
   }
@@ -16,7 +16,7 @@ export class Matrix3x3 {
     return new Matrix3x3(
       new Vector3(this.Cols[0].x, this.Cols[1].x, this.Cols[2].x),
       new Vector3(this.Cols[0].y, this.Cols[1].y, this.Cols[2].y),
-      new Vector3(this.Cols[0].z, this.Cols[1].z, this.Cols[2].z)
+      new Vector3(this.Cols[0].z, this.Cols[1].z, this.Cols[2].z),
     );
   }
 
@@ -37,7 +37,7 @@ export class Matrix3x3 {
     return new Matrix3x3(
       this.Cols[0].scalarBy(x),
       this.Cols[1].scalarBy(x),
-      this.Cols[2].scalarBy(x)
+      this.Cols[2].scalarBy(x),
     );
   }
 
@@ -56,18 +56,18 @@ export class Matrix3x3 {
       new Vector3(
         transposedMatrix.Cols[0].dot(m.Cols[0]),
         transposedMatrix.Cols[1].dot(m.Cols[0]),
-        transposedMatrix.Cols[2].dot(m.Cols[0])
+        transposedMatrix.Cols[2].dot(m.Cols[0]),
       ),
       new Vector3(
         transposedMatrix.Cols[0].dot(m.Cols[1]),
         transposedMatrix.Cols[1].dot(m.Cols[1]),
-        transposedMatrix.Cols[2].dot(m.Cols[1])
+        transposedMatrix.Cols[2].dot(m.Cols[1]),
       ),
       new Vector3(
         transposedMatrix.Cols[0].dot(m.Cols[2]),
         transposedMatrix.Cols[1].dot(m.Cols[2]),
-        transposedMatrix.Cols[2].dot(m.Cols[2])
-      )
+        transposedMatrix.Cols[2].dot(m.Cols[2]),
+      ),
     );
   }
 
@@ -76,7 +76,7 @@ export class Matrix3x3 {
     return new Vector3(
       transposedMatrix.Cols[0].dot(v),
       transposedMatrix.Cols[1].dot(v),
-      transposedMatrix.Cols[2].dot(v)
+      transposedMatrix.Cols[2].dot(v),
     );
   }
 

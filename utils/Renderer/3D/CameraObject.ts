@@ -28,8 +28,8 @@ export class CameraObject {
       new Vector3(
         -OutViewX.dot(pos),
         -OutViewY.dot(pos),
-        -OutViewZ.dot(pos)
-      ).toAffine(true)
+        -OutViewZ.dot(pos),
+      ).toAffine(true),
     );
   }
 
@@ -40,7 +40,7 @@ export class CameraObject {
       new Vector3(OutViewX.x, OutViewY.x, OutViewZ.x).toAffine(false),
       new Vector3(OutViewX.y, OutViewY.y, OutViewZ.y).toAffine(false),
       new Vector3(OutViewX.z, OutViewY.z, OutViewZ.z).toAffine(false),
-      Vector4.UnitZ
+      Vector4.UnitZ,
     );
   }
 }

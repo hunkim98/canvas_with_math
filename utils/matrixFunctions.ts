@@ -22,14 +22,14 @@ export function multiplyMatrices(m1: Matrix, m2: Matrix): Matrix {
 
 export function multiplyMatrixWithVector(
   matrix: Matrix,
-  vector: GenericVector
+  vector: GenericVector,
 ): GenericVector {
   const matrixResult = multiplyMatrices(matrix, [vector]);
   return matrixResult[0];
 }
 
 export function transposeMatrix(matrix: Matrix) {
-  return matrix[0].map((_, colIndex) => matrix.map((row) => row[colIndex]));
+  return matrix[0].map((_, colIndex) => matrix.map(row => row[colIndex]));
 }
 
 export function addMatrices(m1: Matrix, m2: Matrix) {

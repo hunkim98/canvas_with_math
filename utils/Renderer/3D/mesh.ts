@@ -11,7 +11,7 @@ export class Mesh3D {
     vertices: Array<Vector3>,
     indices: Array<number>,
     color?: Array<LinearColor>,
-    UVs?: Array<Vector2>
+    UVs?: Array<Vector2>,
   ) {
     this.vertices = vertices;
     this.indices = indices;

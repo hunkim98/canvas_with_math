@@ -15,7 +15,7 @@ export class Vertex2D {
     return new Vertex2D(
       this.position.scalarBy(inScalar),
       this.color.scalarBy(inScalar),
-      this.UV.scalarBy(inScalar)
+      this.UV.scalarBy(inScalar),
     );
   }
 
@@ -23,7 +23,7 @@ export class Vertex2D {
     return new Vertex2D(
       this.position.add(inVector.position),
       this.color.add(inVector.color),
-      this.UV.add(inVector.UV)
+      this.UV.add(inVector.UV),
     );
   }
 }

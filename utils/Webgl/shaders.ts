@@ -1,7 +1,7 @@
 export function initShaderProgram(
   gl: WebGLRenderingContext,
   vsSource: string,
-  fsSource: string
+  fsSource: string,
 ) {
   const vertexShader = loadShader(gl, gl.VERTEX_SHADER, vsSource)!;
   const fragmentShader = loadShader(gl, gl.FRAGMENT_SHADER, fsSource)!;
@@ -18,8 +18,8 @@ export function initShaderProgram(
   if (!gl.getProgramParameter(shaderProgram, gl.LINK_STATUS)) {
     alert(
       `Unable to initialize the shader program: ${gl.getProgramInfoLog(
-        shaderProgram
-      )}`
+        shaderProgram,
+      )}`,
     );
     return null;
   }
@@ -30,7 +30,7 @@ export function initShaderProgram(
 export function loadShader(
   gl: WebGLRenderingContext,
   type: GLenum,
-  source: string
+  source: string,
 ) {
   const shader = gl.createShader(type)!;
 
@@ -46,7 +46,7 @@ export function loadShader(
 
   if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
     alert(
-      `An error occurred compiling the shaders: ${gl.getShaderInfoLog(shader)}`
+      `An error occurred compiling the shaders: ${gl.getShaderInfoLog(shader)}`,
     );
     gl.deleteShader(shader);
     return null;

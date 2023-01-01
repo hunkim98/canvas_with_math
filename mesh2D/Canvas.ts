@@ -95,11 +95,11 @@ export default class Canvas {
 
       const u = addVectors(
         tv[1],
-        tv[0].map((element) => -element)
+        tv[0].map(element => -element),
       );
       const v = addVectors(
         tv[2],
-        tv[0].map((element) => -element)
+        tv[0].map(element => -element),
       );
       const udotv = dotVectors(u, v);
       const vdotv = dotVectors(v, v);
@@ -121,7 +121,7 @@ export default class Canvas {
           const pointToTest = [x, y];
           const w = addVectors(
             pointToTest,
-            tv[0].map((element) => -element)
+            tv[0].map(element => -element),
           );
           const wdotu = dotVectors(w, u);
           const wdotv = dotVectors(w, v);
@@ -156,17 +156,17 @@ export default class Canvas {
       drawLine(
         this.canvas,
         this.rawVertices[indices[bi]],
-        this.rawVertices[indices[bi + 1]]
+        this.rawVertices[indices[bi + 1]],
       );
       drawLine(
         this.canvas,
         this.rawVertices[indices[bi]],
-        this.rawVertices[indices[bi + 2]]
+        this.rawVertices[indices[bi + 2]],
       );
       drawLine(
         this.canvas,
         this.rawVertices[indices[bi + 1]],
-        this.rawVertices[indices[bi + 2]]
+        this.rawVertices[indices[bi + 2]],
       );
     }
   }

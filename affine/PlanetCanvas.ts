@@ -96,7 +96,7 @@ export default class Canvas {
     this.earthMoonAngle += this.deltaEarthMoonAngle;
     this.earthOrigin = multiplyMatrixWithVector(
       createRotateMatrix(this.deltaSunEarthAngle),
-      this.earthOrigin
+      this.earthOrigin,
     ) as Vector2d;
   }
 
@@ -107,17 +107,17 @@ export default class Canvas {
       0,
     ]);
     const earthRotateAffineMatrix = createAffineRotateMatrix(
-      createRotateMatrix(this.sunEarthAngle)
+      createRotateMatrix(this.sunEarthAngle),
     );
     const earthCombinedAffineMatrix = multiplyMatrices(
       earthRotateAffineMatrix,
-      earthTranslateAffineMatrix
+      earthTranslateAffineMatrix,
     );
-    this.earthVectors = tempEarthVectors.map((vector) => {
+    this.earthVectors = tempEarthVectors.map(vector => {
       const affineVector = vectorToAffineVector(vector);
       const transformedAffineVector = multiplyMatrixWithVector(
         earthCombinedAffineMatrix,
-        affineVector
+        affineVector,
       );
       return affineVectorToVector(transformedAffineVector) as Vector2d;
     });
@@ -138,17 +138,17 @@ export default class Canvas {
       0,
     ]);
     const moonRotateAffineMatrix = createAffineRotateMatrix(
-      createRotateMatrix(this.earthMoonAngle)
+      createRotateMatrix(this.earthMoonAngle),
     );
     const moonCombinedAffineMatrix = multiplyMatrices(
       createAffineTranslateMatrix(this.earthOrigin),
-      multiplyMatrices(moonRotateAffineMatrix, moonTranslateAffineMatrix)
+      multiplyMatrices(moonRotateAffineMatrix, moonTranslateAffineMatrix),
     );
-    this.moonVectors = tempMoonVectors.map((vector) => {
+    this.moonVectors = tempMoonVectors.map(vector => {
       const affineVector = vectorToAffineVector(vector);
       const transformedAffineVector = multiplyMatrixWithVector(
         moonCombinedAffineMatrix,
-        affineVector
+        affineVector,
       );
       return affineVectorToVector(transformedAffineVector) as Vector2d;
     });

@@ -23,7 +23,7 @@
     "eslint-plugin-promise": "^6.0.0",
     "gl-matrix": "^3.4.3",
     "html-webpack-plugin": "^5.5.0",
-    "prettier": "2.7.1",
+    "prettier": "^2.8.1",
     "ts-loader": "^8.0.3",
     "typescript": "*",
     "webpack": "^5.74.0",

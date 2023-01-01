@@ -9,7 +9,7 @@ export class Vertex3D {
   constructor(
     inPosition: Vector4,
     color: LinearColor = LinearColor.Black,
-    UV: Vector2 = new Vector2(1, 1)
+    UV: Vector2 = new Vector2(1, 1),
   ) {
     this.position = inPosition;
     this.color = color;
@@ -20,7 +20,7 @@ export class Vertex3D {
     return new Vertex3D(
       this.position.add(inVector.position),
       this.color.add(inVector.color),
-      this.UV.add(inVector.UV)
+      this.UV.add(inVector.UV),
     );
   }
 
@@ -28,7 +28,7 @@ export class Vertex3D {
     return new Vertex3D(
       this.position.scalarBy(inScalar),
       this.color.scalarBy(inScalar),
-      this.UV.scalarBy(inScalar)
+      this.UV.scalarBy(inScalar),
     );
   }
 }

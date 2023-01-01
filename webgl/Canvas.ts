@@ -62,28 +62,28 @@ export default class Canvas {
     this.shaderProgram = initShaderProgram(
       this.context,
       this.vsSource,
-      this.fsSource
+      this.fsSource,
     )!;
     this.programInfo = {
       program: this.shaderProgram,
       attribLocations: {
         vertexPosition: this.context.getAttribLocation(
           this.shaderProgram,
-          "aVertexPosition"
+          "aVertexPosition",
         ),
         vertexColor: this.context.getAttribLocation(
           this.shaderProgram,
-          "aVertexColor"
+          "aVertexColor",
         ),
       },
       uniformLocations: {
         projectionMatrix: this.context.getUniformLocation(
           this.shaderProgram,
-          "uProjectionMatrix"
+          "uProjectionMatrix",
         )!,
         modelViewMatrix: this.context.getUniformLocation(
           this.shaderProgram,
-          "uModelViewMatrix"
+          "uModelViewMatrix",
         )!,
       },
     };
@@ -128,7 +128,7 @@ export default class Canvas {
     this.context.bufferData(
       this.context.ARRAY_BUFFER,
       new Float32Array(colors),
-      this.context.STATIC_DRAW
+      this.context.STATIC_DRAW,
     );
 
     ///position buffer
@@ -180,7 +180,7 @@ export default class Canvas {
     this.context.bufferData(
       this.context.ARRAY_BUFFER,
       new Float32Array(positions),
-      this.context.STATIC_DRAW
+      this.context.STATIC_DRAW,
     );
 
     //index buffer
@@ -206,7 +206,7 @@ export default class Canvas {
     this.context.bufferData(
       this.context.ELEMENT_ARRAY_BUFFER,
       new Uint16Array(indices),
-      this.context.STATIC_DRAW
+      this.context.STATIC_DRAW,
     );
 
     return {
@@ -238,7 +238,7 @@ export default class Canvas {
     mat4.translate(
       modelViewMatrix, // destination matrix
       modelViewMatrix, // matrix to translate
-      [-0.0, 0.0, -6.0]
+      [-0.0, 0.0, -6.0],
     ); // amount to translate
     //rotate second
     // mat4.rotate(
@@ -257,7 +257,7 @@ export default class Canvas {
       modelViewMatrix, // destination matrix
       modelViewMatrix, // matrix to rotate
       this.cubeRotation * 0.3, // amount to rotate in radians
-      [1, 0, 0]
+      [1, 0, 0],
     ); // axis to rotate around (X)
     {
       const numComponents = 3; // pull out 2 values per iteration
@@ -273,10 +273,10 @@ export default class Canvas {
         type,
         normalize,
         stride,
-        offset
+        offset,
       );
       this.context.enableVertexAttribArray(
-        this.programInfo.attribLocations.vertexPosition
+        this.programInfo.attribLocations.vertexPosition,
       );
     }
 
@@ -296,10 +296,10 @@ export default class Canvas {
         type,
         normalize,
         stride,
-        offset
+        offset,
       );
       this.context.enableVertexAttribArray(
-        this.programInfo.attribLocations.vertexPosition
+        this.programInfo.attribLocations.vertexPosition,
       );
     }
 
@@ -318,10 +318,10 @@ export default class Canvas {
         type,
         normalize,
         stride,
-        offset
+        offset,
       );
       this.context.enableVertexAttribArray(
-        this.programInfo.attribLocations.vertexColor
+        this.programInfo.attribLocations.vertexColor,
       );
     }
 
@@ -336,12 +336,12 @@ export default class Canvas {
     this.context.uniformMatrix4fv(
       this.programInfo.uniformLocations.projectionMatrix,
       false,
-      projectionMatrix
+      projectionMatrix,
     );
     this.context.uniformMatrix4fv(
       this.programInfo.uniformLocations.modelViewMatrix,
       false,
-      modelViewMatrix
+      modelViewMatrix,
     );
 
     {
@@ -352,14 +352,14 @@ export default class Canvas {
         this.context.TRIANGLES,
         vertexCount,
         type,
-        offset
+        offset,
       );
     }
     this.cubeRotation += deltaTime;
   }
   clear() {
     this.context.clear(
-      this.context.COLOR_BUFFER_BIT | this.context.DEPTH_BUFFER_BIT
+      this.context.COLOR_BUFFER_BIT | this.context.DEPTH_BUFFER_BIT,
     );
   }
 }
