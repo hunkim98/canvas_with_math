@@ -43,7 +43,6 @@ export default class Canvas {
       GameEngine.CubeMesh,
     );
     this.gameObject.transform.setScale(new Vector3(50, 50, 50));
-    console.log(this.gameObject.transform.getModelingMatrix());
     console.log("canvas has been set!");
     // this.cubeTransform.rotation.Yaw = 1;
     // this.cubeTransform.rotation.Pitch = 1;
@@ -106,7 +105,6 @@ export default class Canvas {
       const cameraRay = objectTransform.position.subtract(
         this.camera.transform.position,
       );
-      console.log(normal);
       if (normal.dot(cameraRay) >= 0) {
         continue;
         // return;
