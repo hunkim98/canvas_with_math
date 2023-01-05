@@ -77,37 +77,40 @@ export default class Canvas {
       const finalMatrix = this.camera
         .getViewMatrix()
         .multiplyMatrix(this.gameObject.transform.getModelingMatrix());
-      this.drawMesh3D(gameObject.getMesh(), finalMatrix);
+      this.drawMesh3D(gameObject.getMesh(), finalMatrix, gameObject.transform);
     }
   }
 
-  drawMesh3D(mesh: Mesh3D, modelMatrix: Matrix4x4, linearColor?: LinearColor) {
+  drawMesh3D(
+    mesh: Mesh3D,
+    modelMatrix: Matrix4x4,
+    objectTransform: TransformComponent,
+    linearColor?: LinearColor,
+  ) {
     const vertexBuffers = mesh.getVertices();
     const indexBuffers = mesh.getIndices();
+    const updatedVertexBuffers = vertexBuffers.map(buffer => {
+      return modelMatrix.multiplyVector(buffer.toAffine(true)).toVector3();
+    });
     const triangleCount = indexBuffers.length / 3;
     for (let ti = 0; ti < triangleCount; ++ti) {
       const bi = ti * 3;
       //backface culling added here (cross product)
-      const v1 = vertexBuffers[indexBuffers[bi + 1]].subtract(
-        vertexBuffers[indexBuffers[bi]],
+      const v1 = updatedVertexBuffers[indexBuffers[bi + 1]].subtract(
+        updatedVertexBuffers[indexBuffers[bi]],
       );
-      const v2 = vertexBuffers[indexBuffers[bi + 2]].subtract(
-        vertexBuffers[indexBuffers[bi]],
+      const v2 = updatedVertexBuffers[indexBuffers[bi + 2]].subtract(
+        updatedVertexBuffers[indexBuffers[bi]],
       );
-      // we call the perpendicular vector of the two vectors as normal
-      // 정점 변환 (아핀 변환)
-      const updatedVertexBuffers = vertexBuffers.map(buffer => {
-        return modelMatrix.multiplyVector(buffer.toAffine(true)).toVector3();
-      });
-      // console.log(vertexBuffers[0]);
-      // console.log(
-      //   updatedVertexBuffers[0],
-      //   updatedVertexBuffers[1],
-      //   updatedVertexBuffers[2],
-      //   updatedVertexBuffers[3],
-      // );
       const normal = v1.crossProduct(v2);
-      // const cameraDerection =
+      const cameraRay = objectTransform.position.subtract(
+        this.camera.transform.position,
+      );
+      console.log(normal);
+      if (normal.dot(cameraRay) >= 0) {
+        continue;
+        // return;
+      }
 
       drawLine(
         this.canvas,
