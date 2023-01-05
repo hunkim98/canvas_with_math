@@ -29,6 +29,9 @@ export class Vector2 {
   clone(): Vector2 {
     return new Vector2(this.x, this.y);
   }
+  crossProduct(v: Vector2): Vector2 {
+    return new Vector2(this.x * v.y - this.y * v.x, 0);
+  }
   length() {
     return Math.sqrt(this.dot(this));
   }

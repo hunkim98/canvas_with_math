@@ -40,17 +40,18 @@ export class Rotator {
   getLocalAxes() {
     //this is radian value
     const { Yaw, Roll, Pitch } = this.toRadian();
-    //x-axis rotation - pitch rotate
-    const Rpitch = new Matrix3x3(
-      Vector3.UnitX,
-      new Vector3(0, Math.cos(Pitch), Math.sin(Pitch)),
-      new Vector3(0, -Math.sin(Pitch), Math.cos(Pitch)),
-    );
+
     //y-axis rotation - yaw rotate
     const Ryaw = new Matrix3x3(
       new Vector3(Math.cos(Yaw), 0, -Math.sin(Yaw)),
       Vector3.UnitY,
       new Vector3(Math.sin(Yaw), 0, Math.cos(Yaw)),
+    );
+    //x-axis rotation - pitch rotate
+    const Rpitch = new Matrix3x3(
+      Vector3.UnitX,
+      new Vector3(0, Math.cos(Pitch), Math.sin(Pitch)),
+      new Vector3(0, -Math.sin(Pitch), Math.cos(Pitch)),
     );
     //z-axis rotation - roll rotate
     const Rroll = new Matrix3x3(

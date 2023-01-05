@@ -14,13 +14,16 @@ export class TransformComponent {
 
   addYawRotation(InDegree: number) {
     this.rotation.Yaw += InDegree;
+    this.update();
   }
 
   addPitchRotation(InDegree: number) {
     this.rotation.Pitch += InDegree;
+    this.update();
   }
   addRollRotation(InDegree: number) {
     this.rotation.Roll += InDegree;
+    this.update();
   }
 
   update() {
@@ -29,6 +32,16 @@ export class TransformComponent {
     this.right = OutRight;
     this.up = OutUp;
     this.forward = OutForward;
+  }
+
+  setPosition(newPosition: Vector3) {
+    this.position = newPosition;
+    this.update();
+  }
+
+  setRotation(newRotation: Rotator) {
+    this.rotation = newRotation;
+    this.update();
   }
 
   setLocalAxes(inRight: Vector3, inUp: Vector3, inForward: Vector3) {

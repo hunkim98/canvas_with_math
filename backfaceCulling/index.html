@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Backface Culling</title>
+  </head>
+  <body>
+    <nav>
+      <a href=".">home</a>
+    </nav>
+    <main>
+      <h1>Backface Culling</h1>
+      <div class="description">
+        <p>The math behind Backface Culling is cross product.</p>
+        <p>Two vectors will create a plane</p>
+        <p>
+          The cross product of two vectors will create a vector that is
+          perpendicular to the plane
+        </p>
+        <p>
+          If we dot the cross product with the vector from the camera to the
+          vertex(object), we will get a positive number if the vertex is facing
+          the camera, and a negative number if the vertex is facing away from
+          the camera.
+        </p>
+      </div>
+      <canvas id="canvas"></canvas>
+      <button id="toggleButton">Toggle Mesh/Surface</button>
+    </main>
+  </body>
+</html>

@@ -11,9 +11,10 @@ export class CameraObject {
 
   getViewAxes() {
     return {
-      OutViewX: this.transform.getLocalX(),
+      OutViewX: this.transform.getLocalX().scalarBy(-1),
       OutViewY: this.transform.getLocalY(),
-      OutViewZ: this.transform.getLocalZ(),
+      // DESC: the camera is looking at the negative z direction
+      OutViewZ: this.transform.getLocalZ().scalarBy(-1),
     };
   }
 
@@ -40,7 +41,7 @@ export class CameraObject {
       new Vector3(OutViewX.x, OutViewY.x, OutViewZ.x).toAffine(false),
       new Vector3(OutViewX.y, OutViewY.y, OutViewZ.y).toAffine(false),
       new Vector3(OutViewX.z, OutViewY.z, OutViewZ.z).toAffine(false),
-      Vector4.UnitZ,
+      Vector4.UnitW,
     );
   }
 }

@@ -33,6 +33,14 @@ export class Vector4 {
   dot(v: Vector4): number {
     return this.x * v.x + this.y * v.y + this.z * v.z + this.w * v.w;
   }
+  crossProduct(v: Vector4): Vector4 {
+    return new Vector4(
+      this.z * v.w - this.w * v.z,
+      this.w * v.x - this.x * v.w,
+      this.x * v.y - this.y * v.x,
+      this.y * v.z - this.z * v.y,
+    );
+  }
   clone(): Vector4 {
     return new Vector4(this.x, this.y, this.z, this.w);
   }
