@@ -5,6 +5,7 @@
   "main": "webpack.config.js",
   "scripts": {
     "start": "webpack serve --open --env mode=development --config webpack.config.js",
+    "dev": "webpack serve --open --env mode=development --config webpack.config.js",
     "build": "webpack --env mode=production --config webpack.config.js"
   },
   "keywords": [],

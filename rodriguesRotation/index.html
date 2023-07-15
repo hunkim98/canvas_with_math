@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rodrigues Rotation</title>
+  </head>
+  <body>
+    <nav>
+      <a href=".">home</a>
+    </nav>
+    <main>
+      <h1>Rodrigues Rotation</h1>
+      <div class="description">
+        <p>
+          Rodrigues Rotation is a rotation method that was invented to avoid
+          gimbal lock.
+        </p>
+        <p>
+          It is a combination of rotation around the main axis and rotation
+          around the other two axis.
+        </p>
+        <p>
+          One is able to rotate an object by first deciding the main axis to
+          which the object should rotate based on, and then rotating around the
+          other two axis that are perpendicular to the main axis.
+        </p>
+      </div>
+      <canvas id="canvas"></canvas>
+      <div style="display: flex; flex-direction: column; width: 300px">
+        <button id="rotateYaw">Rotate Main Axis' Yaw</button>
+        <button id="rotatePitch">Rotate Main Axis' Pitch</button>
+        <button id="rotateRoll">Rotate Main Axis' Roll</button>
+        <br />
+        <button id="rotateClockwise">Rotate Clockwise</button>
+        <button id="rotateCounterClockwise">Rotate CounterClockwise</button>
+      </div>
+    </main>
+  </body>
+</html>

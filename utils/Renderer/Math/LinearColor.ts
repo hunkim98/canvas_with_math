@@ -9,6 +9,10 @@ export class LinearColor {
   OneOver255 = 1 / 255;
   static White = new LinearColor(1.0, 1.0, 1.0, 1.0);
   static Black = new LinearColor(0.0, 0.0, 0.0, 1.0);
+  static Red = new LinearColor(1.0, 0.0, 0.0, 1.0);
+  static Green = new LinearColor(0.0, 1.0, 0.0, 1.0);
+  static Blue = new LinearColor(0.0, 0.0, 1.0, 1.0);
+  static Yellow = new LinearColor(1.0, 1.0, 0.0, 1.0);
 
   constructor(
     inR: number = 0.0,
