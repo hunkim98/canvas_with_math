@@ -1,4 +1,4 @@
-import { Matrix } from "../types/matrix";
+import Matrix, { EigenvalueDecomposition } from "ml-matrix";
 import { Vector2d } from "../types/vector";
 import {
   affineVectorToVector,
@@ -12,6 +12,7 @@ import {
   multiplyMatrices,
   multiplyMatrixWithVector,
 } from "../utils/matrixFunctions";
+import { pca } from "../utils/pca";
 import { toScreenPointVector } from "../utils/screen";
 import { rotateVector2d, createRotateMatrix } from "../utils/tranform2d";
 import { addVectors, dotVectors } from "../utils/vectorFunctions";
@@ -66,8 +67,16 @@ export default class Canvas {
       [4, 5, 6],
     ];
 
-    const det = getMatrixDet(matrixExample);
-    console.log(det);
+    const data: number[][] = [
+      [1, 2, 3],
+      [4, 5, 6],
+      [7, 8, 9],
+    ];
+    const matrix = new Matrix(data);
+    const pcaResult = pca(matrix, 2);
+    console.log(pcaResult);
+
+    // const k: number = 2; // Number of principal components
   }
 
   toggleColorMode() {
