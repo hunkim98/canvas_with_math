@@ -9,6 +9,7 @@ const htmlPageNames = [
   "cube3D",
   "backfaceCulling",
   "rodriguesRotation",
+  "svd",
 ];
 const entry = htmlPageNames.reduce((entries, componentName) => {
   entries[componentName] = path.join(__dirname, `./${componentName}/index.ts`);

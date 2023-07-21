@@ -67,3 +67,42 @@ export function scalarMatrix(m1: Matrix, scalar: number) {
   }
   return result;
 }
+
+/**
+ * @description get the determinant of a matrix
+ * the determinant is nonzero if and only if the matrix is invertible
+ * and the linear map represented by the matrix is an isomorphism.
+ * @param m Matrix
+ * @returns determinant of the matrix
+ */
+export function getMatrixDet(m: Matrix) {
+  if (m.length === 2) {
+    return m[0][0] * m[1][1] - m[0][1] * m[1][0];
+  }
+  let sum = 0;
+  for (let i = 0; i < m.length; i++) {
+    sum += m[0][i] * getCofactor(m, 0, i);
+  }
+  return sum;
+}
+
+export function getCofactor(m: Matrix, row: number, col: number) {
+  const minor = getMinor(m, row, col);
+  return Math.pow(-1, row + col) * getMatrixDet(minor);
+}
+
+export function getMinor(m: Matrix, row: number, col: number) {
+  const minor: Matrix = [];
+  for (let i = 0; i < m.length; i++) {
+    if (i !== row) {
+      const minorRow = [];
+      for (let j = 0; j < m.length; j++) {
+        if (j !== col) {
+          minorRow.push(m[i][j]);
+        }
+      }
+      minor.push(minorRow);
+    }
+  }
+  return minor;
+}

@@ -36,6 +36,11 @@ export function scalarVector(vector: Array<number>, scalar: number) {
   return result;
 }
 
+export function normalizeVector(vector: Array<number>) {
+  const magnitude = Math.sqrt(dotVectors(vector, vector));
+  return scalarVector(vector, 1 / magnitude);
+}
+
 export function returnVectorSize(vector: Array<number>) {
   let sum = 0;
   for (const element of vector) {
