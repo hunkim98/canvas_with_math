@@ -52,6 +52,7 @@ export default class Canvas {
   ];
   private imageObservable: ImageObservable | undefined;
 
+
   constructor(canvas: HTMLCanvasElement, imageObserver: ImageObserver) {
     this.canvas = canvas;
     this.context = canvas.getContext("2d")!;
@@ -66,7 +67,7 @@ export default class Canvas {
     const imageObservable = new ImageObservable();
     imageObservable.subscribe(imageObserver);
     const newImg = new Image();
-    newImg.onload = function() {
+    newImg.onload = () => {
       let height = newImg.height;
       let width = newImg.width;
       const imgElement = document.createElement("img");
@@ -77,7 +78,6 @@ export default class Canvas {
       tempContext.drawImage(newImg, 0, 0, width, height);
       const imageData = tempContext.getImageData(0, 0, width, height);
       const data = imageData.data;
-      console.log(data,'data')
       imageObservable.updateImage(data, width, height);
       if(width>300 || height>300){
         if(width>height){
@@ -88,6 +88,9 @@ export default class Canvas {
           height = 300;
         }
       }
+      this.parseRGB(data, width, height).then(([rData, gData, bData]) => {
+        this.extractPCA(rData, gData, bData);
+      })
       imgElement.width = width;
       imgElement.height = height;
       imgElement.src = catImg;
@@ -118,6 +121,38 @@ export default class Canvas {
     console.log(pcaResult);
 
     // const k: number = 2; // Number of principal components
+  }
+
+  async parseRGB(imageData: Uint8ClampedArray, width: number, height: number): Promise<[Matrix, Matrix, Matrix]> {
+    return new Promise((resolve, reject) => {
+      const rData = new Matrix(width, height);
+      const gData = new Matrix(width, height);
+      const bData = new Matrix(width, height);
+
+      for (let i = 0; i < width; i++) {
+  
+        for (let j = 0; j < height; j++) {
+          const index = (i + j * width) * 4;
+          rData.set(i, j, imageData[index]);
+          gData.set(i, j, imageData[index + 1]);
+          bData.set(i, j, imageData[index + 2]);
+        }
+
+      }
+      resolve([rData, gData, bData]);
+      }
+    )
+  }
+
+  async extractPCA(rData: Matrix, gData: Matrix, bData: Matrix) {
+    return new Promise((resolve, reject) => {
+      if(!this.imageObservable){
+        reject('no imageObservable')
+      }
+      else {
+        resolve("hi")
+      }
+    })
   }
 
   toggleColorMode() {
