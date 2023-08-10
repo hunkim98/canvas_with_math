@@ -12,6 +12,7 @@
   "author": "Kim Dong Hun <hunkim98@gmail.com>",
   "license": "ISC",
   "dependencies": {
+    "file-loader": "^6.2.0",
     "ml-matrix": "^6.10.4",
     "rxjs": "^6.6.3"
   },

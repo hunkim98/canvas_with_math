@@ -9,7 +9,8 @@ const htmlPageNames = [
   "cube3D",
   "backfaceCulling",
   "rodriguesRotation",
-  "svd",
+  // "svd",
+  "imgCompression"
 ];
 const entry = htmlPageNames.reduce((entries, componentName) => {
   entries[componentName] = path.join(__dirname, `./${componentName}/index.ts`);
@@ -31,6 +32,13 @@ module.exports = env => ({
         use: "ts-loader",
         exclude: /node_modules/,
       },
+      {
+        test: /\.(png|jpg|gif)$/,
+        use: [{
+            loader: 'file-loader',
+            options: {}
+        }]
+    }
     ],
   },
   resolve: {
