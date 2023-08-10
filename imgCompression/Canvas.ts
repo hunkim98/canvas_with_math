@@ -25,6 +25,9 @@ import {
   drawLine,
 } from "../utils/vectorShapes";
 import catImg from "./cat.jpg"
+import { ImageObservable, ImageObserver } from "./imageObservable";
+
+// reference: https://www.kaggle.com/code/xvivancos/image-compression-using-pca/report
 
 export default class Canvas {
   private canvas: HTMLCanvasElement;
@@ -47,8 +50,9 @@ export default class Canvas {
     [this.squareHalfSize, this.squareHalfSize],
     [this.squareHalfSize + 100, -this.squareHalfSize],
   ];
+  private imageObservable: ImageObservable | undefined;
 
-  constructor(canvas: HTMLCanvasElement) {
+  constructor(canvas: HTMLCanvasElement, imageObserver: ImageObserver) {
     this.canvas = canvas;
     this.context = canvas.getContext("2d")!;
     this.canvas.style.border = "1px solid black";
@@ -59,11 +63,22 @@ export default class Canvas {
     this.canvas.style.width = `${this.width}px`;
     this.canvas.style.height = `${this.height}px`;
     console.log("canvas has been set!");
-    var newImg = new Image();
+    const imageObservable = new ImageObservable();
+    imageObservable.subscribe(imageObserver);
+    const newImg = new Image();
     newImg.onload = function() {
       let height = newImg.height;
       let width = newImg.width;
       const imgElement = document.createElement("img");
+      const tempCanvasElement = document.createElement("canvas");
+      const tempContext = tempCanvasElement.getContext("2d")!;
+      tempCanvasElement.width = width;
+      tempCanvasElement.height = height;
+      tempContext.drawImage(newImg, 0, 0, width, height);
+      const imageData = tempContext.getImageData(0, 0, width, height);
+      const data = imageData.data;
+      console.log(data,'data')
+      imageObservable.updateImage(data, width, height);
       if(width>300 || height>300){
         if(width>height){
           height = height*300/width;
@@ -77,7 +92,6 @@ export default class Canvas {
       imgElement.height = height;
       imgElement.src = catImg;
       document.body.appendChild(imgElement);
-      alert ('The image size is '+width+'*'+height);
     }
 
     newImg.src = catImg; // this must be done AFTER setting onload
