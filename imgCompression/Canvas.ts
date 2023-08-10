@@ -24,10 +24,12 @@ import {
   drawPoint,
   drawLine,
 } from "../utils/vectorShapes";
-import catImg from "./cat.jpg"
+import catImg from "./small_cat.png"
 import { ImageObservable, ImageObserver } from "./imageObservable";
 
 // reference: https://www.kaggle.com/code/xvivancos/image-compression-using-pca/report
+// reference: https://www.enjoyalgorithms.com/blog/image-compression-using-pca
+// Quantization 
 
 export default class Canvas {
   private canvas: HTMLCanvasElement;
@@ -70,6 +72,8 @@ export default class Canvas {
     newImg.onload = () => {
       let height = newImg.height;
       let width = newImg.width;
+      const originalWidth = width;
+      const originalHeight = height;
       const imgElement = document.createElement("img");
       const tempCanvasElement = document.createElement("canvas");
       const tempContext = tempCanvasElement.getContext("2d")!;
@@ -79,16 +83,16 @@ export default class Canvas {
       const imageData = tempContext.getImageData(0, 0, width, height);
       const data = imageData.data;
       imageObservable.updateImage(data, width, height);
-      if(width>300 || height>300){
+      if(width>800 || height>800){
         if(width>height){
-          height = height*300/width;
-          width = 300;
+          height = height*800/width;
+          width = 800;
         }else{
-          width = width*300/height;
-          height = 300;
+          width = width*800/height;
+          height = 800;
         }
       }
-      this.parseRGB(data, width, height).then(([rData, gData, bData]) => {
+      this.parseRGB(data, originalWidth, originalHeight).then(([rData, gData, bData]) => {
         this.extractPCA(rData, gData, bData);
       })
       imgElement.width = width;
@@ -147,6 +151,30 @@ export default class Canvas {
   async extractPCA(rData: Matrix, gData: Matrix, bData: Matrix) {
     return new Promise((resolve, reject) => {
       if(!this.imageObservable){
+        const projectedR = pca(rData, 20).dataOriginal
+        const projectedG = pca(gData, 20).dataOriginal
+        const projectedB = pca(bData, 20).dataOriginal
+        const image = new ImageData(projectedR.columns, projectedR.rows);
+        for(let i=0; i<projectedR.columns; i++){
+          for(let j=0; j<projectedR.rows; j++){
+            const index = (i + j * projectedR.columns) * 4;
+            image.data[index] = projectedR.get(i, j);
+            image.data[index+1] = projectedG.get(i, j);
+            image.data[index+2] = projectedB.get(i, j);
+            image.data[index+3] = 255;
+          }
+        }
+        const tempCanvasElement = document.createElement("canvas");
+        const tempContext = tempCanvasElement.getContext("2d")!;
+        tempCanvasElement.width = projectedR.columns;
+        tempCanvasElement.height = projectedR.rows;
+        tempContext.putImageData(image, 0, 0);
+        const imgElement = document.createElement("img");
+        imgElement.src = tempCanvasElement.toDataURL();
+        document.body.appendChild(imgElement);
+
+
+
         reject('no imageObservable')
       }
       else {
